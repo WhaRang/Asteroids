@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
 public class ObjectPool<T> : MonoBehaviour where T : MonoBehaviour
 {
     [SerializeField]
@@ -10,24 +9,16 @@ public class ObjectPool<T> : MonoBehaviour where T : MonoBehaviour
     [SerializeField]
     private int poolSize;
 
-    [SerializeField]
-    private bool activateObjects;
-
-    public int PoolSize { 
-        get => poolSize;
-        set => poolSize = value;
-    }
-
     private List<T> pool;
 
     private int index = 0;
 
-    protected void Awake()
+    private void Awake()
     {
         FillPool();
     }
 
-    public void FillPool()
+    private void FillPool()
     {
         if (pool == null)
             pool = new List<T>();
@@ -38,7 +29,7 @@ public class ObjectPool<T> : MonoBehaviour where T : MonoBehaviour
                 break;
 
             T spawnedObj = Instantiate(prefab);
-            spawnedObj.gameObject.SetActive(activateObjects);
+            spawnedObj.gameObject.SetActive(false);
 
             pool.Add(spawnedObj);
         }
